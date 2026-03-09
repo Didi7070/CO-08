@@ -26,19 +26,18 @@
         if (currentIndex === -1) return;
       }
 
-      // Compute prev/next URLs
+      // Compute prev/next URLs (wraps around, skips landing page)
       var prevUrl, nextUrl;
+      var last = projects.length - 1;
       if (currentSlug === null) {
         // On landing page
-        prevUrl = root + 'sites/' + projects[projects.length - 1].slug + '/';
+        prevUrl = root + 'sites/' + projects[last].slug + '/';
         nextUrl = root + 'sites/' + projects[0].slug + '/';
       } else {
-        prevUrl = currentIndex === 0
-          ? root
-          : root + 'sites/' + projects[currentIndex - 1].slug + '/';
-        nextUrl = currentIndex === projects.length - 1
-          ? root
-          : root + 'sites/' + projects[currentIndex + 1].slug + '/';
+        var prevIndex = currentIndex === 0 ? last : currentIndex - 1;
+        var nextIndex = currentIndex === last ? 0 : currentIndex + 1;
+        prevUrl = root + 'sites/' + projects[prevIndex].slug + '/';
+        nextUrl = root + 'sites/' + projects[nextIndex].slug + '/';
       }
 
       // Inject arrow buttons
